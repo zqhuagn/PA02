@@ -52,7 +52,18 @@ The user moves a cube around the board trying to knock balls into a cone
 		endCamera.lookAt(0,0,0);
 
 	}
-
+	function createStartScene(){
+		startScene = initScene();
+		startText = createSkyBox('start.png',10);
+		startText.rotateX(Math.PI);
+		startScene.add(startText);
+		var light2 = createPointLight();
+		light2.position.set(0,200,20);
+		startScene.add(light2);
+		startCamera = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 0.1, 1000 );
+		startCamera.position.set(0,50,1);
+		startCamera.lookAt(0,10,0);
+	}
 	/**
 	  To initialize the scene, we initialize each of its components
 	*/
