@@ -587,6 +587,10 @@ The user moves a cube around the board trying to knock balls into a cone
 		requestAnimationFrame( animate );
 
 		switch(gameState.scene) {
+			case "start":
+				renderer.render( startScene, startCamera );
+				console.log("start");
+				break;
 
 			case "youwon":
 				//endText.rotateY(0.005);
