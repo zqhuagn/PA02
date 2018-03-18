@@ -566,7 +566,12 @@ The user moves a cube around the board trying to knock balls into a cone
 	  var info = document.getElementById("info");
 		info.innerHTML='<div style="font-size:24pt">Score: '
     + gameState.score
-    + " health="+gameState.health
+    + " health:"+healthbar(gameState.health)
     + '</div>';
 
+	}
+
+	function healthbar(health){
+		html = "<progress value=" + health + " max=10> </progress>";
+    		return html;
 	}
