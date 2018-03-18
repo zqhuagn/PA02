@@ -10,6 +10,7 @@ The user moves a cube around the board trying to knock balls into a cone
 	var scene, renderer;  // all threejs programs need these
 	var camera, avatarCam, edgeCam;  // we have two cameras in the main scene
 	var avatar;
+	var numBalls = 20;
 	// here are some mesh objects ...
 
 	var cone;
@@ -164,7 +165,7 @@ The user moves a cube around the board trying to knock balls into a cone
 
 
 	function addBalls(){
-		var numBalls = 20;
+		numBalls ++;
 		for(i=0;i<numBalls;i++){
 			var ball = createBall();
 			ball.position.set(randN(20)+15,30,randN(20)+15);
