@@ -365,7 +365,7 @@ The user moves a cube around the board trying to knock balls into a cone
             var pmaterial = new Physijs.createMaterial(material, 0.9, 0.5);
 						avatar = new Physijs.BoxMesh( geometry, pmaterial );
 						console.log("created suzanne mesh");
-						var s = 0.5;
+						var s = 3;
 						avatar.scale.y=s;
 						avatar.scale.x=s;
 						avatar.scale.z=s;
