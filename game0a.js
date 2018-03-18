@@ -16,7 +16,7 @@ The user moves a cube around the board trying to knock balls into a cone
 	var cone;
 	var npc;
 
-	var endScene, endCamera, endText;
+        var endScene, endCamera, endText,endSceneLost,endCameraLost;
 	var startScene, startCamera;
 
 
@@ -53,6 +53,19 @@ The user moves a cube around the board trying to knock balls into a cone
 		endCamera.lookAt(0,0,0);
 
 	}
+        function createEndSceneLost(){
+		endSceneLost = initScene();
+		endTextLost = createSkyBox('youlost.png',10);
+		//endText.rotateX(Math.PI);
+		endSceneLost.add(endTextLost);
+		var light1 = createPointLight();
+		light1.position.set(0,200,20);
+		endSceneLost.add(light1);
+		endCameraLost = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 0.1, 1000 );
+		endCameraLost.position.set(0,50,1);
+		endCameraLost.lookAt(0,0,0);
+
+	}
 	function createStartScene(){
 		startScene = initScene();
 		startText = createSkyBox('start.png',10);
@@ -73,6 +86,7 @@ The user moves a cube around the board trying to knock balls into a cone
 			scene = initScene();
 			createEndScene();
 			createStartScene();
+		createEndSceneLost();  
 			initRenderer();
 			createMainScene();
 	}
@@ -113,7 +127,7 @@ The user moves a cube around the board trying to knock balls into a cone
 
 
 			addBalls();
-
+                        addRedBalls();
 			cone = createConeMesh(4,6);
 			cone.position.set(10,3,7);
 			scene.add(cone);
@@ -195,6 +209,32 @@ The user moves a cube around the board trying to knock balls into a cone
 	}
 
 //addh
+function addRedBalls(){
+		var numRedBalls=5;
+		for(j=0;j<numRedBalls;j++){
+			var redBall = createRedBall();
+			redBall.position.set(randN(20)+15,30,randN(20)+15);
+			scene.add(redBall);
+
+			redBall.addEventListener( 'collision',
+				function( other_object, relative_velocity, relative_rotation, contact_normal ) {
+					if (other_object==avatar){
+						//console.log("ball "+i+" hit the cone");
+						soundEffect('good.wav');
+						if(Math.random()>=0.5){
+							gameState.health=gameState.health+1;  // add one to the health
+
+						}else{
+							gameState.health=gameState.health-1;  // decrease one to the health
+						}
+
+						this.position.y = this.position.y - 100;
+						this.__dirtyPosition = true;
+					}
+				}
+			)
+		}
+	}
 	function addMedicineBall(){
 
 	  var Mball =  createMBall();
@@ -452,7 +492,16 @@ The user moves a cube around the board trying to knock balls into a cone
 		return mesh;
 	}
 
-
+	function createRedBall(){
+		//var geometry = new THREE.SphereGeometry( 4, 20, 20);
+		var geometry = new THREE.SphereGeometry( 1, 16, 16);
+		var material = new THREE.MeshLambertMaterial( { color: 0xff0000} );
+		var pmaterial = new Physijs.createMaterial(material,0.9,0.95);
+		var mesh = new Physijs.BoxMesh( geometry, pmaterial );
+		mesh.setDamping(0.1,0.1);
+		mesh.castShadow = true;
+		return mesh;
+	}
 
 
 
@@ -477,12 +526,14 @@ The user moves a cube around the board trying to knock balls into a cone
 			gameState.scene = 'main';
 			gameState.score = 0;
 			addBalls();
+			addRedBalls();
 			return;
 		}
 		if (gameState.scene == 'start' && event.key=='p'){
 			gameState.scene = 'main';
 			gameState.score = 0;
 			addBalls();
+			addRedBalls();
 			return;
 		}
 
@@ -592,10 +643,13 @@ The user moves a cube around the board trying to knock balls into a cone
 				renderer.render( startScene, startCamera );
 				console.log("start");
 				break;
-
+                       case "youlost":
+			 renderer.render( endSceneLost, endCameraLost);
+		       break;
 			case "youwon":
 				//endText.rotateY(0.005);
-				renderer.render( endScene, endCamera );
+				renderer.render( 
+					, endCamera );
 				break;
 
 			case "main":
