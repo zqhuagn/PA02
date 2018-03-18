@@ -648,8 +648,7 @@ function addRedBalls(){
 		       break;
 			case "youwon":
 				//endText.rotateY(0.005);
-				renderer.render( 
-					, endCamera );
+				renderer.render( endScene, endCamera );
 				break;
 
 			case "main":
