@@ -31,7 +31,7 @@ The user moves a cube around the board trying to knock balls into a cone
 
 
 	// Here is the main game control
-  init(); //
+  	init(); //
 	initControls();
 	animate();  // start the animation loop!
 
@@ -88,11 +88,11 @@ The user moves a cube around the board trying to knock balls into a cone
 			// create the avatar
 			avatarCam = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 1000 );
 			avatar = createAvatar();
-			avatar.translateY(20);
-			avatarCam.translateY(-4);
-			avatarCam.translateZ(3);
-			scene.add(avatar);
-			gameState.camera = avatarCam;
+			//avatar.translateY(20);
+			//avatarCam.translateY(-4);
+			//avatarCam.translateZ(3);
+			//scene.add(avatar);
+			//gameState.camera = avatarCam;
 
       edgeCam = new THREE.PerspectiveCamera( 120, window.innerWidth / window.innerHeight, 0.1, 1000 );
       edgeCam.position.set(20,20,10);
